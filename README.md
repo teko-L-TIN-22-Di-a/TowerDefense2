@@ -28,7 +28,7 @@ Bei diesem Spiel handelt es sich um ein Spielmodus - Einzelspieler.
 Die Turmtypen werden während der Projektierungsphase erarbeitet. Sie werden sich durch Reichweite, Schaden und Angriffsgeschwindigkeit unterscheiden.
 Mit den Startguthaben, die der Spieler am Anfang des Spiels erhält sowie mit den Belohnungen für die eliminierte Gegner soll der Spieler eine Möglichkeit haben, neue Türme zu bauen sowie die bestehenden Türme mit gewissen Upgrades wie Schaden-, Angriffsgeschwindikgeits- oder Reichweiteupgrades nachzurüsten.
 
-# Kartenlayout
+## Kartenlayout
 
 Der Kartenlayout soll folgende Elemente beinhalten:
 
