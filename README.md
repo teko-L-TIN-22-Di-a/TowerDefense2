@@ -2,7 +2,7 @@
 
 ## Links
 
-Backlog: https://trello.com/b/9ByzK5IA/towerdefense2
+Backlog: tbd
 
 ## Kurzbeschreibung
 
@@ -26,4 +26,16 @@ Bei diesem Spiel handelt es sich um ein Spielmodus - Einzelspieler.
 ## Turmtypen
 
 Die Turmtypen werden während der Projektierungsphase erarbeitet. Sie werden sich durch Reichweite, Schaden und Angriffsgeschwindigkeit unterscheiden.
-Mit den Startguthben, die der Spieler am Anfang des Spiels erhält sowie mit den Belohnungen für die eliminierte Gegner soll der Spieler eine Möglichkeit haben, neue Türme zu bauen sowie die bestehenden Turme mit gewissen Upgrades wie Schaden-, Angriffsgeschwindikgeits- oder Reichweiteupgrades nachzurüsten.
+Mit den Startguthaben, die der Spieler am Anfang des Spiels erhält sowie mit den Belohnungen für die eliminierte Gegner soll der Spieler eine Möglichkeit haben, neue Türme zu bauen sowie die bestehenden Türme mit gewissen Upgrades wie Schaden-, Angriffsgeschwindikgeits- oder Reichweiteupgrades nachzurüsten.
+
+# Kartenlayout
+
+Der Kartenlayout soll folgende Elemente beinhalten:
+
+- Spawn Tile: Auf diesem Kachel werde die Gegner erscheinen
+- Finish Tile: Erreicht ein oder mehrere Gegner diesen Kachel, werden die Trefferpunkte des Spielers abgezogen
+- Building Tile: Auf diesem Kachel kann ein Turm errichtet und nachgerüstet werden
+- Road Tile: Ein Kachel, auf welchem sich die Gegner bewegen dürfen
+- Environment Tile: Rein dekoratives Kachel (Wasser, Wald, Sand usw.), keine Interaktionen auf diesem Kachel möglich
+
+Der Kartenlayout wird so einfach wie möglichgehaltet, also erscheinen die Gegner nur an einem Ort und versuchen die Finish-Kachel zu erreichen.
