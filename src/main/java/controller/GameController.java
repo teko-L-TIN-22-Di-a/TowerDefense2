@@ -5,21 +5,17 @@ import model.enemies.Enemy;
 import model.towers.Tower;
 import view.GameView;
 
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameController {
     private GameModel model;
     private GameView view;
 
-    private final double FPS_PER_SECOND = 120.0;
-    private final double UPS_PER_SECOND = 60.0;
-
     public GameController(GameModel model, GameView view) {
         this.model = model;
         this.view = view;
-
-        // todo Game Loop
-        //while(true) {
-        //
-        //}
     }
 
     public void addEnemy(Enemy enemy) {
@@ -28,5 +24,22 @@ public class GameController {
 
     public void addTower(Tower tower) {
         model.addTower(tower);
+    }
+
+    public void addWaypoints(Point2D.Double waypoint) {
+        model.addWaypoint(waypoint);
+    }
+
+    public void updateEnemies() {
+        List<Enemy> enemiesToRemove = new ArrayList<>();
+
+        for (Enemy enemy : model.getEnemies()) {
+            enemy.update();
+            if (enemy.hasReachedEnd() || enemy.isDead()) {
+                enemiesToRemove.add(enemy);
+            }
+        }
+
+        model.getEnemies().removeAll(enemiesToRemove);
     }
 }

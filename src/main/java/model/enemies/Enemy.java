@@ -1,113 +1,71 @@
 package model.enemies;
 
-/**
- * Abstrakte Klass Enemy
- * PosX             - int, Position auf der X-Achse
- * PosY             - int, Position auf dey Y-Achse
- * Health           - int, Anzahl Lebenspunkte
- * Value            - int, Anzahl Goldmünzen, die der Spieler erhält, wenn der Gegner getötet wird
- * Speed            - long, Geschwindigkeit, mit welcher sich der Gegner bewegt
- * isAlive          - boolean, Ist der Gegner am Leben
- * isFrozen         - boolean, Ist der Gegner eingefroren
- */
-public abstract class Enemy {
-    protected int PosX;
-    protected int PosY;
-    protected int Health;
-    protected int Value;
-    protected double Speed;
-    protected boolean isAlive = true;
-    protected boolean isFrozen = false;
+import java.awt.geom.Point2D;
+import java.util.List;
 
-    // Konstruktor
+public class Enemy {
+    private List<Point2D.Double> waypoints;
+    private Point2D.Double currentPos;
+    private Point2D.Double direction;
+    private double speed;
+    private int currentWaypointIndex;
+    private boolean hasReachedEnd;
+    private boolean isDead;
 
-    public Enemy(int posX,
-                 int posY,
-                 int health,
-                 int speed,
-                 int value) {
-        this.PosX = posX;
-        this.PosY = posY;
-        this.Health = health;
-        this.Speed = speed;
-        this.Value = value;
-        this.isAlive = isAlive;
-        this.isFrozen = isFrozen;
+    public Enemy(List<Point2D.Double> waypoints, double speed) {
+        this.currentWaypointIndex = 0;
+        this.waypoints = waypoints;
+        //this.currentPos = waypoints.get(currentWaypointIndex);
+        this.currentPos = new Point2D.Double(waypoints.get(currentWaypointIndex).getX(), waypoints.get(currentWaypointIndex).getY());
+        this.speed = speed;
+        this.hasReachedEnd  = false;
+        this.isDead = false;
     }
 
-    // Methoden
-
-    public void freeze(int freezeDuration) {
-        // todo
+    public void update() {
+        move();
     }
 
-    public void damage(int damage) {
-        // todo
+    private void move() {
+        if (currentWaypointIndex < waypoints.size() - 1) {
+            Point2D.Double startPoint = waypoints.get(currentWaypointIndex);
+            Point2D.Double endPoint = waypoints.get(currentWaypointIndex + 1);
+
+            // Pythagoras :D
+            double dx = endPoint.x - startPoint.x;
+            double dy = endPoint.y - startPoint.y;
+            double length = Math.sqrt(dx * dx + dy * dy);
+            direction = new Point2D.Double(dx / length, dy / length);
+
+            if (currentPos.distance(endPoint) > speed) {
+                currentPos.x += direction.x * speed;
+                currentPos.y += direction.y * speed;
+            } else {
+                currentPos.setLocation(endPoint);
+                currentWaypointIndex++;
+            }
+        } else {
+            hasReachedEnd = true;
+        }
     }
 
-    public void kill() {
-        // todo
+    public int getX() {
+        return (int)currentPos.getX();
     }
 
-    public void teleport() {
-        // todo
+    public int getY() {
+        return (int)currentPos.getY();
     }
 
-    // Getter und Setter
-
-    public int getPosX() {
-        return PosX;
+    public Point2D.Double getDirection() {
+        return direction;
     }
 
-    public void setPosX(int posX) {
-        PosX = posX;
+    public boolean hasReachedEnd() {
+        return hasReachedEnd;
     }
 
-    public int getPosY() {
-        return PosY;
-    }
-
-    public void setPosY(int posY) {
-        PosY = posY;
-    }
-
-    public int getHealth() {
-        return Health;
-    }
-
-    public void setHealth(int health) {
-        Health = health;
-    }
-
-    public int getValue() {
-        return Value;
-    }
-
-    public void setValue(int value) {
-        Value = value;
-    }
-
-    public double getSpeed() {
-        return Speed;
-    }
-
-    public void setSpeed(long speed) {
-        Speed = speed;
-    }
-
-    public boolean isAlive() {
-        return isAlive;
-    }
-
-    public void setAlive(boolean alive) {
-        isAlive = alive;
-    }
-
-    public boolean isFrozen() {
-        return isFrozen;
-    }
-
-    public void setFrozen(boolean frozen) {
-        isFrozen = frozen;
+    public boolean isDead() {
+        return isDead;
     }
 }
