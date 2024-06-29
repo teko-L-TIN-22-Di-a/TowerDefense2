@@ -17,27 +17,9 @@ public class Main {
 
         GameModel model = new GameModel();
         GameView view = new GameView(model);
-        GameController controller = new GameController(model, view);
+        GameController controller = new GameController(model);
 
         controller.addWaypoints();
-
-        // DEV
-        model.getSpawningQueue().add(new EliteEnemy(model.getWaypoints()));
-        model.getSpawningQueue().add(new EliteEnemy(model.getWaypoints()));
-        model.getSpawningQueue().add(new EliteEnemy(model.getWaypoints()));
-        model.getSpawningQueue().add(new NormalEnemy(model.getWaypoints()));
-        model.getSpawningQueue().add(new NormalEnemy(model.getWaypoints()));
-        model.getSpawningQueue().add(new NormalEnemy(model.getWaypoints()));
-        model.getSpawningQueue().add(new FastEnemy(model.getWaypoints()));
-        model.getSpawningQueue().add(new FastEnemy(model.getWaypoints()));
-        model.getSpawningQueue().add(new FastEnemy(model.getWaypoints()));
-
-
-        /*
-        controller.addEnemy(new NormalEnemy(model.getWaypoints()));
-        controller.addEnemy(new FastEnemy(model.getWaypoints()));
-        controller.addEnemy(new EliteEnemy(model.getWaypoints()));
-        */
 
         JFrame jframe = new JFrame();
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,7 +45,8 @@ public class Main {
                 lastFrameTime = now;
 
                 // Update
-                controller.update();
+                controller.updateWaves();
+                controller.updateEnemies();
 
                 // Draw
                 view.repaint();

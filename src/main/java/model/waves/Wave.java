@@ -5,6 +5,9 @@ public class Wave {
     private int fastEnemyCount;
     private int eliteEnemyCount;
 
+    // Leerer Constructor für Jackson..
+    public Wave() {}
+
     public Wave(int normalEnemyCount, int fastEnemyCount, int eliteEnemyCount) {
         this.normalEnemyCount = normalEnemyCount;
         this.fastEnemyCount = fastEnemyCount;
@@ -22,4 +25,6 @@ public class Wave {
     public int getEliteEnemyCount() {
         return eliteEnemyCount;
     }
+
+
 }

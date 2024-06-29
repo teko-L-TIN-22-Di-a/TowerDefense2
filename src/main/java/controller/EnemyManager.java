@@ -8,30 +8,31 @@ import java.util.List;
 
 public class EnemyManager {
     private GameModel model;
-    private int delayBetweenEnemies;
-    private long lastSpawnTime;
+    private final int delayBetweenEnemies;
+    private long lastEnemySpawnTime;
 
     public EnemyManager(GameModel model) {
         this.model = model;
         this.delayBetweenEnemies = model.getGameConfig().getDelayBetweenEnemies();
-        this.lastSpawnTime = System.currentTimeMillis();
+        this.lastEnemySpawnTime = System.currentTimeMillis();
     }
 
     public void spawnEnemies() {
         long currentTime = System.currentTimeMillis();
         if (!model.getSpawningQueue().isEmpty()) {
-            if (currentTime - lastSpawnTime >= delayBetweenEnemies) {
-                // Enemy  aus der Queue entfernen und rendern lassen
+            if (currentTime - lastEnemySpawnTime >= delayBetweenEnemies) {
+                // Enemy aus der Queue entfernen und rendern lassen
                 addEnemy(model.getSpawningQueue().poll());
-                lastSpawnTime = currentTime;
+                lastEnemySpawnTime = currentTime;
             }
         }
     }
 
-    // Einen Gegner direkt in die List aufnehmen, die gerendert wird
+    // Einen Gegner direkt in die List aufnehmen, welche gerendert wird
     public void addEnemy(AbstractEnemy enemy) {
        model.getEnemies().add(enemy);
     }
+
 
     public void updateEnemies() {
         List<AbstractEnemy> enemiesToRemove = new ArrayList<>();

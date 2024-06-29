@@ -1,21 +1,27 @@
-{
-  "delayBetweenEnemies": 1000,
-  "delayBetweenWaves": 10000,
-  "waves": [
-    {
-      "normalEnemyCount": 3,
-      "fastEnemyCount": 3,
-      "eliteEnemyCount": 3
-    },
-    {
-      "normalEnemyCount": 5,
-      "fastEnemyCount": 5,
-      "eliteEnemyCount": 5
-    },
-    {
-      "normalEnemyCount": 7,
-      "fastEnemyCount": 7,
-      "eliteEnemyCount": 7
-    }
-  ]
-}
+[
+  {
+    "normalEnemyCount": 3,
+    "fastEnemyCount": 0,
+    "eliteEnemyCount": 0
+  },
+  {
+    "normalEnemyCount": 5,
+    "fastEnemyCount": 0,
+    "eliteEnemyCount": 0
+  },
+  {
+    "normalEnemyCount": 0,
+    "fastEnemyCount": 10,
+    "eliteEnemyCount": 0
+  },
+  {
+    "normalEnemyCount": 0,
+    "fastEnemyCount": 0,
+    "eliteEnemyCount": 5
+  },
+  {
+    "normalEnemyCount": 10,
+    "fastEnemyCount": 10,
+    "eliteEnemyCount": 10
+  }
+]

@@ -10,8 +10,8 @@ import java.util.Properties;
 public class GameConfigLoader {
     public static GameConfig loadConfig(String resourcePath) {
         Properties properties = new Properties();
-        try (InputStream inputStream = ResourceLoader.class.getResourceAsStream(resourcePath)) {
-            properties.load(inputStream);
+        try (InputStream is = ResourceLoader.class.getResourceAsStream(resourcePath)) {
+            properties.load(is);
         } catch (IOException e) {
             System.err.println("Failed to load resource: " + resourcePath);
             return null;

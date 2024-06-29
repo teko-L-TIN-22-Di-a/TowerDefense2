@@ -1,33 +1,31 @@
 package controller;
 
 import model.GameModel;
-import model.enemies.AbstractEnemy;
-
-import view.GameView;
-
-import java.util.ArrayList;
-import java.util.List;
+import model.waves.Wave;
 
 public class GameController {
     private GameModel model;
     private WaypointManager waypointManager;
     private EnemyManager enemyManager;
+    private WaveManager waveManager;
 
-    public GameController(GameModel model, GameView view) {
+    public GameController(GameModel model) {
         this.model = model;
         this.waypointManager = new WaypointManager(model);
         this.enemyManager = new EnemyManager(model);
+        this.waveManager = new WaveManager(model);
     }
 
     public void addWaypoints() {
         waypointManager.addWaypoints();
     }
 
-    public void addEnemy(AbstractEnemy enemy) {
-        enemyManager.addEnemy(enemy);
+    // dev
+    public void updateWaves() {
+        waveManager.updateWaves();
     }
 
-    public void update() {
+    public void updateEnemies() {
         enemyManager.spawnEnemies();
         enemyManager.updateEnemies();
     }
