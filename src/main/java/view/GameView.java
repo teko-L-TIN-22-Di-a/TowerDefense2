@@ -1,8 +1,7 @@
 package view;
 
 import model.GameModel;
-import model.enemies.Enemy;
-import model.towers.*;
+import model.enemies.*;
 import util.ResourceLoader;
 
 import javax.swing.*;
@@ -51,7 +50,6 @@ public class GameView extends JPanel {
         drawBackground(g);
         drawWaypoints(g, model.getWaypoints());
         drawEnemies(g, model.getEnemies());
-        drawTowers(g, model.getTowers());
     }
 
     private void drawBackground(Graphics g) {
@@ -59,7 +57,6 @@ public class GameView extends JPanel {
     }
 
     private void drawWaypoints(Graphics g, List<Point2D.Double> waypoints) {
-
         double prevX = waypoints.get(0).getX();
         double prevY = waypoints.get(0).getY();
 
@@ -75,8 +72,8 @@ public class GameView extends JPanel {
         }
     }
 
-    private void drawEnemies(Graphics g, List<Enemy> enemies) {
-        for (Enemy enemy : enemies) {
+    private void drawEnemies(Graphics g, List<AbstractEnemy> enemies) {
+        for (AbstractEnemy enemy : enemies) {
             //DEV
             //g.setColor(Color.RED);
             //g.fillRect(enemy.getX(), enemy.getY(), 32, 32);
@@ -109,24 +106,21 @@ public class GameView extends JPanel {
 
                 // x-32, y-32 um das Bild zentriert darzustellen
                 g.drawImage(enemyImage, enemy.getX()-32, enemy.getY()-32, null);
+
+                // Gegner unterscheiden
+                if (enemy instanceof NormalEnemy) {
+                    g.setColor(Color.BLUE);
+                } else if (enemy instanceof FastEnemy) {
+                    g.setColor(Color.YELLOW);
+                } else if (enemy instanceof EliteEnemy) {
+                    g.setColor(Color.RED);
+                } else {
+                    g.setColor(Color.BLACK);
+                }
+
+                g.fillOval(enemy.getX(), enemy.getY(), 5,5);
+
             }
-        }
-    }
-
-    private void drawTowers(Graphics g, List<Tower> towers) {
-        // DEV, aktuell ohne tileset
-
-        for (Tower tower : towers) {
-
-            if (tower instanceof ShootingTower) {
-                g.setColor(Color.ORANGE);
-            } else if (tower instanceof FreezingTower) {
-                g.setColor(Color.BLUE);
-            } else if (tower instanceof TeleportingTower) {
-                g.setColor(Color.MAGENTA);
-            }
-
-            g.fillRect(tower.getPosX(), tower.getPosY(), 20, 20);
         }
     }
 }

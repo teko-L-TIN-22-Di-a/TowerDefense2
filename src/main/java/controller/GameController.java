@@ -1,39 +1,41 @@
 package controller;
 
 import model.GameModel;
-import model.enemies.Enemy;
-import model.towers.Tower;
+import model.enemies.AbstractEnemy;
+
 import view.GameView;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameController {
     private GameModel model;
-    private GameView view;
+    private WaypointManager waypointManager;
+    private EnemyManager enemyManager;
 
     public GameController(GameModel model, GameView view) {
         this.model = model;
-        this.view = view;
+        this.waypointManager = new WaypointManager(model);
+        this.enemyManager = new EnemyManager(model);
     }
 
-    public void addEnemy(Enemy enemy) {
-        model.addEnemy(enemy);
+    public void addWaypoints() {
+        waypointManager.addWaypoints();
     }
 
-    public void addTower(Tower tower) {
-        model.addTower(tower);
+    public void addEnemy(AbstractEnemy enemy) {
+        enemyManager.addEnemy(enemy);
     }
 
-    public void addWaypoints(Point2D.Double waypoint) {
-        model.addWaypoint(waypoint);
+
+    public void update() {
+        updateEnemies();
     }
 
-    public void updateEnemies() {
-        List<Enemy> enemiesToRemove = new ArrayList<>();
+    private void updateEnemies() {
+        List<AbstractEnemy> enemiesToRemove = new ArrayList<>();
 
-        for (Enemy enemy : model.getEnemies()) {
+        for (AbstractEnemy enemy : model.getEnemies()) {
             enemy.update();
             if (enemy.hasReachedEnd() || enemy.isDead()) {
                 enemiesToRemove.add(enemy);

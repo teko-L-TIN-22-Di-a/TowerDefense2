@@ -1,11 +1,11 @@
 import controller.GameController;
 import model.GameModel;
-import model.enemies.Enemy;
-import model.movement.Waypoint;
+import model.enemies.EliteEnemy;
+import model.enemies.FastEnemy;
+import model.enemies.NormalEnemy;
 import view.GameView;
 
 import javax.swing.*;
-import java.awt.geom.Point2D;
 import java.io.IOException;
 
 public class Main {
@@ -19,27 +19,12 @@ public class Main {
         GameView view = new GameView(model);
         GameController controller = new GameController(model, view);
 
-        // Waypoints
-        model.addWaypoint(new Point2D.Double(832,-64));
-        model.addWaypoint(new Point2D.Double(832, 256));
-        model.addWaypoint(new Point2D.Double(640, 256));
-        model.addWaypoint(new Point2D.Double(640, 128));
-        model.addWaypoint(new Point2D.Double(128, 128));
-        model.addWaypoint(new Point2D.Double(128, 640));
-        model.addWaypoint(new Point2D.Double(320, 640));
-        model.addWaypoint(new Point2D.Double(320, 384));
-        model.addWaypoint(new Point2D.Double(512, 384));
-        model.addWaypoint(new Point2D.Double(512, 448));
-        model.addWaypoint(new Point2D.Double(896, 448));
-        model.addWaypoint(new Point2D.Double(896, 832));
-        model.addWaypoint(new Point2D.Double(704, 832));
-        model.addWaypoint(new Point2D.Double(704, 640));
-        model.addWaypoint(new Point2D.Double(512, 640));
-        model.addWaypoint(new Point2D.Double(512, 832));
-        model.addWaypoint(new Point2D.Double(-64, 832));
+        controller.addWaypoints();
 
-        // Enemies
-        controller.addEnemy(new Enemy(model.getWaypoints(), 2));
+        // DEV
+        controller.addEnemy(new NormalEnemy(model.getWaypoints()));
+        controller.addEnemy(new FastEnemy(model.getWaypoints()));
+        controller.addEnemy(new EliteEnemy(model.getWaypoints()));
 
         JFrame jframe = new JFrame();
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -65,7 +50,7 @@ public class Main {
                 lastFrameTime = now;
 
                 // Update
-                controller.updateEnemies();
+                controller.update();
 
                 // Draw
                 view.repaint();
@@ -79,6 +64,5 @@ public class Main {
                 lastTimeCheck = System.currentTimeMillis();
             }
         }
-
     }
 }

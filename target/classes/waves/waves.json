@@ -1,0 +1,21 @@
+{
+  "delayBetweenEnemies": 1000,
+  "delayBetweenWaves": 10000,
+  "waves": [
+    {
+      "normalEnemyCount": 3,
+      "fastEnemyCount": 3,
+      "eliteEnemyCount": 3
+    },
+    {
+      "normalEnemyCount": 5,
+      "fastEnemyCount": 5,
+      "eliteEnemyCount": 5
+    },
+    {
+      "normalEnemyCount": 7,
+      "fastEnemyCount": 7,
+      "eliteEnemyCount": 7
+    }
+  ]
+}
