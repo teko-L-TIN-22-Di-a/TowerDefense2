@@ -23,9 +23,9 @@ public class WaveManager {
     public void updateWaves() {
         if (!model.getWavesQueue().isEmpty()) {
             long currentTime = System.currentTimeMillis();
-            System.out.println(currentTime - lastWaveSpawnTime);
-            System.out.println(delayBetweenWaves);
-            System.out.println("---");
+            //System.out.println(currentTime - lastWaveSpawnTime);
+            //System.out.println(delayBetweenWaves);
+            //System.out.println("---");
             // Delay überschritten
             if (currentTime - lastWaveSpawnTime >= delayBetweenWaves) {
                 // Nur spawnen, wenn die Enemy Queue leer ist

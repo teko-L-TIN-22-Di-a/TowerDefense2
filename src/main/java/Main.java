@@ -1,11 +1,9 @@
 import controller.GameController;
 import model.GameModel;
-import model.enemies.EliteEnemy;
-import model.enemies.FastEnemy;
-import model.enemies.NormalEnemy;
 import view.GameView;
 
 import javax.swing.*;
+import java.awt.geom.Point2D;
 import java.io.IOException;
 
 public class Main {
@@ -16,8 +14,8 @@ public class Main {
         final double TIME_PER_FRAME = 1_000_000_000.00 / FPS_PER_SECOND;
 
         GameModel model = new GameModel();
-        GameView view = new GameView(model);
         GameController controller = new GameController(model);
+        GameView view = new GameView(model, controller);
 
         controller.addWaypoints();
 
@@ -47,6 +45,7 @@ public class Main {
                 // Update
                 controller.updateWaves();
                 controller.updateEnemies();
+                controller.updateTowers();
 
                 // Draw
                 view.repaint();

@@ -3,6 +3,7 @@ package model;
 import model.config.GameConfig;
 import model.enemies.AbstractEnemy;
 import model.player.Player;
+import model.towers.AbstractTower;
 import model.waves.Wave;
 import util.GameConfigLoader;
 import util.WaveLoader;
@@ -16,6 +17,7 @@ import java.util.Queue;
 public class GameModel {
     private GameConfig gameConfig;
     private List<AbstractEnemy> enemies;
+    private List<AbstractTower> towers;
     private List<Point2D.Double> waypoints;
     private Queue<AbstractEnemy> spawningQueue;
     private Queue<Wave> wavesQueue;
@@ -25,6 +27,7 @@ public class GameModel {
     public GameModel(){
         System.out.println("GameModel : Constructor");
         this.enemies = new ArrayList<>();
+        this.towers = new ArrayList<>();
         this.spawningQueue = new LinkedList<>();
         this.waypoints = new ArrayList<>();
         this.gameConfig = GameConfigLoader.loadConfig("/gameConfig.properties");
@@ -41,6 +44,10 @@ public class GameModel {
 
     public List<AbstractEnemy> getEnemies() {
         return enemies;
+    }
+
+    public List<AbstractTower> getTowers() {
+        return towers;
     }
 
     public Queue<AbstractEnemy> getSpawningQueue() {

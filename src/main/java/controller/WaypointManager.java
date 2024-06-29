@@ -13,7 +13,7 @@ public class WaypointManager {
 
     public void addWaypoints() {
         // Waypoints
-        // unschön und hardcoded, funktioniert aber, wird später levelabhänig -> json
+        // unschön und hardcoded, funktioniert aber, wird später via json eingelesen
         // todo: waypoints.json
         addWaypoint(new Point2D.Double(832,-64));
         addWaypoint(new Point2D.Double(832, 256));

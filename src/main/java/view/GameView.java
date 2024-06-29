@@ -1,16 +1,20 @@
 package view;
 
+import controller.GameController;
 import model.GameModel;
 import model.enemies.*;
+import model.towers.AbstractTower;
 import util.ResourceLoader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-public class GameView extends JPanel {
+public class GameView extends JPanel implements MouseListener {
 
     // GameScreen 15 * 48
     private static final int ROWS = 15;
@@ -20,6 +24,7 @@ public class GameView extends JPanel {
     private static final int PANEL_HEIGHT = COLUMNS * TILE_SIZE;
 
     private GameModel model;
+    private GameController controller;
     private Dimension dimension = new Dimension(PANEL_WIDTH, PANEL_HEIGHT);
 
     private BufferedImage backgroundImage;
@@ -28,7 +33,7 @@ public class GameView extends JPanel {
     private BufferedImage enemyImageLeft;
     private BufferedImage enemyImageRight;
 
-    public GameView(GameModel model) {
+    public GameView(GameModel model, GameController controller) {
 
         backgroundImage = ResourceLoader.loadImage("/levels/level1.png");
 
@@ -39,6 +44,8 @@ public class GameView extends JPanel {
         enemyImageRight = ResourceLoader.loadImage("/enemies/enemy1_right.png");
 
         this.model = model;
+        this.controller = controller;
+        this.addMouseListener(this);
         this.setPreferredSize(dimension);
         this.setMinimumSize(dimension);
         this.setMaximumSize(dimension);
@@ -50,6 +57,7 @@ public class GameView extends JPanel {
         drawBackground(g);
         drawWaypoints(g, model.getWaypoints());
         drawEnemies(g, model.getEnemies());
+        drawTowers(g, model.getTowers());
     }
 
     private void drawBackground(Graphics g) {
@@ -117,10 +125,41 @@ public class GameView extends JPanel {
                 } else {
                     g.setColor(Color.BLACK);
                 }
-
                 g.fillOval(enemy.getX(), enemy.getY(), 5,5);
-
             }
         }
+    }
+
+    public void drawTowers(Graphics g, List<AbstractTower> towers) {
+        for (AbstractTower tower : towers) {
+            g.setColor(Color.MAGENTA);
+            g.fillRect(tower.getX(), tower.getY(), 48, 48);
+        }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        // nichts machen
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        // nichts machen
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        controller.handleMouseClick(e);
+        System.out.println("Mouse Released at " + e.getX() + ", " + e.getY());
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        // nichts machen
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        // nichts machen
     }
 }
