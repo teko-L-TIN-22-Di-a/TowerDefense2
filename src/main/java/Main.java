@@ -22,9 +22,22 @@ public class Main {
         controller.addWaypoints();
 
         // DEV
+        model.getSpawningQueue().add(new EliteEnemy(model.getWaypoints()));
+        model.getSpawningQueue().add(new EliteEnemy(model.getWaypoints()));
+        model.getSpawningQueue().add(new EliteEnemy(model.getWaypoints()));
+        model.getSpawningQueue().add(new NormalEnemy(model.getWaypoints()));
+        model.getSpawningQueue().add(new NormalEnemy(model.getWaypoints()));
+        model.getSpawningQueue().add(new NormalEnemy(model.getWaypoints()));
+        model.getSpawningQueue().add(new FastEnemy(model.getWaypoints()));
+        model.getSpawningQueue().add(new FastEnemy(model.getWaypoints()));
+        model.getSpawningQueue().add(new FastEnemy(model.getWaypoints()));
+
+
+        /*
         controller.addEnemy(new NormalEnemy(model.getWaypoints()));
         controller.addEnemy(new FastEnemy(model.getWaypoints()));
         controller.addEnemy(new EliteEnemy(model.getWaypoints()));
+        */
 
         JFrame jframe = new JFrame();
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

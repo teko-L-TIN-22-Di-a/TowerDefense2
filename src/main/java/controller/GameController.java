@@ -27,21 +27,10 @@ public class GameController {
         enemyManager.addEnemy(enemy);
     }
 
-
     public void update() {
-        updateEnemies();
+        enemyManager.spawnEnemies();
+        enemyManager.updateEnemies();
     }
 
-    private void updateEnemies() {
-        List<AbstractEnemy> enemiesToRemove = new ArrayList<>();
 
-        for (AbstractEnemy enemy : model.getEnemies()) {
-            enemy.update();
-            if (enemy.hasReachedEnd() || enemy.isDead()) {
-                enemiesToRemove.add(enemy);
-            }
-        }
-
-        model.getEnemies().removeAll(enemiesToRemove);
-    }
 }

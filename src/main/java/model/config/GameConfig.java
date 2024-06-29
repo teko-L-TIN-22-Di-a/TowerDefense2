@@ -1,8 +1,8 @@
 package model.config;
 
 public class GameConfig {
-    private int delayBetweenEnemies;
-    private int delayBetweenWaves;
+    final private int delayBetweenEnemies;
+    final private int delayBetweenWaves;
 
     public GameConfig(int delayBetweenEnemies, int delayBetweenWaves) {
         this.delayBetweenEnemies = delayBetweenEnemies;
