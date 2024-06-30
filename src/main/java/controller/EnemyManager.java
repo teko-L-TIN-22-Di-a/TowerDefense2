@@ -35,6 +35,10 @@ public class EnemyManager {
        model.getEnemies().add(enemy);
     }
 
+    public void damageEnemy(AbstractEnemy enemy, int damage) {
+        enemy.damageEnemy(damage);
+    }
+
     public void updateEnemies() {
         List<AbstractEnemy> enemiesToRemove = new ArrayList<>();
 
@@ -47,6 +51,7 @@ public class EnemyManager {
             }
 
             if (enemy.isDead()) {
+                playerManager.addCoins(enemy.getReward());
                 enemiesToRemove.add(enemy);
             }
         }

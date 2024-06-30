@@ -74,14 +74,11 @@ public class GameView extends JPanel implements MouseListener {
     }
 
     private void drawPlayerUI(Graphics g) {
-        g.drawImage(heartImage, 5,5,null);
-        g.drawImage(coinImage, 5, 40, null);
-
         String health = Integer.toString(model.getPlayer().getHealth());
         String coins = Integer.toString(model.getPlayer().getCoins());
 
-        System.out.println("health: " + health);
-        System.out.println("coins: " + coins);
+        g.drawImage(heartImage, 5,5,null);
+        g.drawImage(coinImage, 5, 40, null);
 
         g.setColor(Color.WHITE);
         g.setFont(new Font("Consolas", Font.PLAIN, 19));
@@ -155,6 +152,14 @@ public class GameView extends JPanel implements MouseListener {
     public void drawTowers(Graphics g, List<AbstractTower> towers) {
         for (AbstractTower tower : towers) {
             g.drawImage(towerImage, tower.getX(), tower.getY(), null);
+
+
+            // DEV - Draw Range and Tower Center
+            int r = (int)tower.getRange();
+
+            g.setColor(Color.pink);
+            g.drawOval(tower.getX()+32, tower.getY()+32, 3, 3);
+            g.drawOval(tower.getX()+32 - r, tower.getY()+32 -r, r*2, r*2);
         }
     }
 

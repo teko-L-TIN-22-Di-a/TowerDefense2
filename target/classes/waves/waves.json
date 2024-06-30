@@ -1,5 +1,10 @@
 [
   {
+    "normalEnemyCount": 1,
+    "fastEnemyCount": 0,
+    "eliteEnemyCount": 0
+  },
+  {
     "normalEnemyCount": 3,
     "fastEnemyCount": 0,
     "eliteEnemyCount": 0

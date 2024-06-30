@@ -1,7 +1,6 @@
 package model.enemies;
 
 import java.awt.geom.Point2D;
-import java.util.Date;
 import java.util.List;
 
 public abstract class AbstractEnemy {
@@ -82,6 +81,13 @@ public abstract class AbstractEnemy {
 
     public int getDamage() {
         return damage;
+    }
+
+    public void damageEnemy(int damage) {
+        health -= damage;
+        if (health <= 0) {
+            isDead = true;
+        }
     }
 }
 

@@ -1,10 +1,12 @@
 package controller;
 
 import model.GameModel;
+import model.enemies.AbstractEnemy;
 import model.towers.AbstractTower;
 import model.towers.BasicTower;
 
 import java.awt.geom.Point2D;
+import java.util.List;
 
 public class TowerManager {
     private GameModel model;
@@ -16,7 +18,13 @@ public class TowerManager {
     }
 
     public void updateTowers() {
-        // todo
+        for (AbstractTower tower : model.getTowers()) {
+            for (AbstractEnemy enemy : model.getEnemies()) {
+                if (tower.isEnemyInRange(enemy)) {
+                    System.out.println("enemy in range!");
+                }
+            }
+        }
     }
 
     public void addTower(Point2D.Double location) {
@@ -82,7 +90,14 @@ public class TowerManager {
             // Turm hinzufügen
             if (!towerExists) {
                 Point2D.Double newLocation = new Point2D.Double(newLocationX, newLocationY);
-                model.getTowers().add(new BasicTower(newLocation, model.getGameConfig().getBasicTowerCost()));
+                System.out.println("creating a tower at;" + newLocation);
+                // Turm erstellen
+                model.getTowers().add(new BasicTower(
+                        newLocation,
+                        model.getGameConfig().getBasicTowerCost(),
+                        model.getGameConfig().getBasicTowerCooldown(),
+                        model.getGameConfig().getBasicTowerRange()));
+                // Anzahl Münzen aktualisieren
                 playerManager.removeCoins(model.getGameConfig().getBasicTowerCost());
             }
         }

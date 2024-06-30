@@ -53,7 +53,7 @@ public class Main {
 
             // FPS ausgeben
             if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
-                System.out.println("FPS: " + frames);
+                //System.out.println("FPS: " + frames);
                 frames = 0;
                 lastTimeCheck = System.currentTimeMillis();
             }

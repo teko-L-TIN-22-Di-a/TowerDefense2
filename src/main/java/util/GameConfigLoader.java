@@ -21,12 +21,16 @@ public class GameConfigLoader {
         int startingHealth = Integer.parseInt(properties.getProperty("startingHealth"));
         int startingCoins = Integer.parseInt(properties.getProperty("startingCoins"));
         int basicTowerCost = Integer.parseInt(properties.getProperty("basicTowerCost"));
+        int basicTowerCooldown = Integer.parseInt(properties.getProperty("basicTowerCooldown"));
+        int basicTowerRange = Integer.parseInt(properties.getProperty("basicTowerRange"));
 
         return new GameConfig(
                 delayBetweenEnemies,
                 delayBetweenWaves,
                 startingHealth,
                 startingCoins,
-                basicTowerCost);
+                basicTowerCost,
+                basicTowerCooldown,
+                basicTowerRange);
     }
 }
