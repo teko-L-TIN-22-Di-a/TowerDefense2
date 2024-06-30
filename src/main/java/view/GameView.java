@@ -28,6 +28,8 @@ public class GameView extends JPanel implements MouseListener {
     private Dimension dimension = new Dimension(PANEL_WIDTH, PANEL_HEIGHT);
 
     private BufferedImage backgroundImage;
+    private BufferedImage heartImage;
+    private BufferedImage coinImage;
     private BufferedImage enemyImageUp;
     private BufferedImage enemyImageDown;
     private BufferedImage enemyImageLeft;
@@ -36,6 +38,9 @@ public class GameView extends JPanel implements MouseListener {
     public GameView(GameModel model, GameController controller) {
 
         backgroundImage = ResourceLoader.loadImage("/levels/level1.png");
+        heartImage = ResourceLoader.loadImage("/player/heart.png");
+        coinImage = ResourceLoader.loadImage("/player/coin.png");
+        // https://www.iconarchive.com/show/beautiful-flat-icons-by-elegantthemes.1.html
 
         // Enemy
         enemyImageUp = ResourceLoader.loadImage("/enemies/enemy1_up.png");
@@ -58,10 +63,24 @@ public class GameView extends JPanel implements MouseListener {
         drawWaypoints(g, model.getWaypoints());
         drawEnemies(g, model.getEnemies());
         drawTowers(g, model.getTowers());
+        drawPlayerUI(g);
     }
 
     private void drawBackground(Graphics g) {
         g.drawImage(backgroundImage, 0, 0, null);
+    }
+
+    private void drawPlayerUI(Graphics g) {
+        g.drawImage(heartImage, 5,5,null);
+        g.drawImage(coinImage, 5, 40, null);
+
+        String health = Integer.toString(model.getGameConfig().getStartingHealth());
+        String coins = Integer.toString(model.getGameConfig().getStartingCoins());
+
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Consolas", Font.PLAIN, 19));
+        g.drawString(health, 42, 28);
+        g.drawString(coins, 42, 63);
     }
 
     private void drawWaypoints(Graphics g, List<Point2D.Double> waypoints) {

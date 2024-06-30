@@ -3,7 +3,6 @@ import model.GameModel;
 import view.GameView;
 
 import javax.swing.*;
-import java.awt.geom.Point2D;
 import java.io.IOException;
 
 public class Main {
@@ -34,7 +33,7 @@ public class Main {
 
         int frames = 0;
 
-        // todo Game Loop
+        // todo UPDATE und DRAW trennen (UPS / FPS)
         while (true) {
             now = System.nanoTime();
 

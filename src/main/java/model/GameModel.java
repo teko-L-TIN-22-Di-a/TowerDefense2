@@ -32,6 +32,7 @@ public class GameModel {
         this.waypoints = new ArrayList<>();
         this.gameConfig = GameConfigLoader.loadConfig("/gameConfig.properties");
         this.wavesQueue = WaveLoader.loadWaves("waves/waves.json");
+        this.player = new Player(this.gameConfig.getStartingHealth(), this.gameConfig.getStartingCoins());
     }
 
     public GameConfig getGameConfig() {

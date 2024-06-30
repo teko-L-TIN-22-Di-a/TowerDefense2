@@ -2,7 +2,6 @@ package util;
 
 import model.config.GameConfig;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -19,7 +18,13 @@ public class GameConfigLoader {
 
         int delayBetweenEnemies = Integer.parseInt(properties.getProperty("delayBetweenEnemies"));
         int delayBetweenWaves = Integer.parseInt(properties.getProperty("delayBetweenWaves"));
+        int startingHealth = Integer.parseInt(properties.getProperty("startingHealth"));
+        int startingCoins = Integer.parseInt(properties.getProperty("startingCoins"));
 
-        return new GameConfig(delayBetweenEnemies, delayBetweenWaves);
+        return new GameConfig(
+                delayBetweenEnemies,
+                delayBetweenWaves,
+                startingHealth,
+                startingCoins);
     }
 }
