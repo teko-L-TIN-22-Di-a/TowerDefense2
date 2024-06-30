@@ -9,5 +9,6 @@ public class EliteEnemy extends AbstractEnemy {
         this.health = 30;
         this.speed = 1;
         this.reward = 10;
+        this.damage = 3;
     }
 }

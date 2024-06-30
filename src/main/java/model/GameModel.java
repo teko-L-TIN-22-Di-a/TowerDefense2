@@ -58,4 +58,8 @@ public class GameModel {
     public Queue<Wave> getWavesQueue() {
         return wavesQueue;
     }
+
+    public Player getPlayer() {
+        return player;
+    }
 }

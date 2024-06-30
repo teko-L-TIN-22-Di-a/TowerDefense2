@@ -34,13 +34,16 @@ public class GameView extends JPanel implements MouseListener {
     private BufferedImage enemyImageDown;
     private BufferedImage enemyImageLeft;
     private BufferedImage enemyImageRight;
+    private BufferedImage towerImage;
 
     public GameView(GameModel model, GameController controller) {
 
+        // https://www.iconarchive.com/show/beautiful-flat-icons-by-elegantthemes.1.html
+        //https://www.kenney.nl/assets/tower-defense-top-down
         backgroundImage = ResourceLoader.loadImage("/levels/level1.png");
         heartImage = ResourceLoader.loadImage("/player/heart.png");
         coinImage = ResourceLoader.loadImage("/player/coin.png");
-        // https://www.iconarchive.com/show/beautiful-flat-icons-by-elegantthemes.1.html
+        towerImage = ResourceLoader.loadImage("/towers/tower2.png");
 
         // Enemy
         enemyImageUp = ResourceLoader.loadImage("/enemies/enemy1_up.png");
@@ -74,8 +77,11 @@ public class GameView extends JPanel implements MouseListener {
         g.drawImage(heartImage, 5,5,null);
         g.drawImage(coinImage, 5, 40, null);
 
-        String health = Integer.toString(model.getGameConfig().getStartingHealth());
-        String coins = Integer.toString(model.getGameConfig().getStartingCoins());
+        String health = Integer.toString(model.getPlayer().getHealth());
+        String coins = Integer.toString(model.getPlayer().getCoins());
+
+        System.out.println("health: " + health);
+        System.out.println("coins: " + coins);
 
         g.setColor(Color.WHITE);
         g.setFont(new Font("Consolas", Font.PLAIN, 19));
@@ -101,9 +107,6 @@ public class GameView extends JPanel implements MouseListener {
 
     private void drawEnemies(Graphics g, List<AbstractEnemy> enemies) {
         for (AbstractEnemy enemy : enemies) {
-            //DEV
-            //g.setColor(Color.RED);
-            //g.fillRect(enemy.getX(), enemy.getY(), 32, 32);
 
             BufferedImage enemyImage = null;
 
@@ -151,8 +154,7 @@ public class GameView extends JPanel implements MouseListener {
 
     public void drawTowers(Graphics g, List<AbstractTower> towers) {
         for (AbstractTower tower : towers) {
-            g.setColor(Color.MAGENTA);
-            g.fillRect(tower.getX(), tower.getY(), 48, 48);
+            g.drawImage(towerImage, tower.getX(), tower.getY(), null);
         }
     }
 

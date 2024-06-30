@@ -9,5 +9,6 @@ public class NormalEnemy extends AbstractEnemy {
         this.health = 10;
         this.speed = 2;
         this.reward = 5;
+        this.damage = 2;
     }
 }

@@ -8,9 +8,11 @@ import java.awt.geom.Point2D;
 
 public class TowerManager {
     private GameModel model;
+    private PlayerManager playerManager;
 
-    public TowerManager(GameModel model) {
+    public TowerManager(GameModel model, PlayerManager playerManager) {
         this.model = model;
+        this.playerManager = playerManager;
     }
 
     public void updateTowers() {
@@ -19,33 +21,46 @@ public class TowerManager {
 
     public void addTower(Point2D.Double location) {
 
-        // Waypoints-Paare durchiterieren und prüfen ob die Ziel location sich in der Nähe
-        // einer Gerade zwischen zwischen zwei Punkte befindet
         double targetX = location.getX();
         double targetY = location.getY();
+
+        boolean sufficientCoins = false;
         boolean isInRange = false;
         boolean towerExists = false;
 
-        for (int i = 1; i < model.getWaypoints().size(); i++) {
-            double aX = model.getWaypoints().get(i-1).getX();
-            double aY = model.getWaypoints().get(i-1).getY();
-            double bX = model.getWaypoints().get(i).getX();
-            double bY = model.getWaypoints().get(i).getY();
-            // Min Max bestimmen (+- TILE_SIZE*2)
-            double minX = Math.min(aX, bX) - 64;
-            double maxX = Math.max(aX, bX) + 64;
-            double minY = Math.min(aY, bY) - 64;
-            double maxY = Math.max(aY, bY) + 64;
+        // Genug Münzen?
+        if (model.getPlayer().getCoins() >= model.getGameConfig().getBasicTowerCost()) {
+            sufficientCoins = true;
+        } else {
+            System.out.println("Not enough coins!");
+        }
 
-            // X- und Y-Achse prüfen
-            if (targetX > minX && targetX < maxX && targetY > minY && targetY < maxY) {
-                isInRange = true;
-                break;
+        // Koordinaten berechnen
+        if (sufficientCoins) {
+            // Waypoints-Paare durchiterieren und prüfen ob die Ziel location sich in der Nähe
+            // einer Gerade zwischen zwischen zwei Punkte befindet
+
+            for (int i = 1; i < model.getWaypoints().size(); i++) {
+                double aX = model.getWaypoints().get(i-1).getX();
+                double aY = model.getWaypoints().get(i-1).getY();
+                double bX = model.getWaypoints().get(i).getX();
+                double bY = model.getWaypoints().get(i).getY();
+                // Min Max bestimmen (+- TILE_SIZE*2)
+                double minX = Math.min(aX, bX) - 64;
+                double maxX = Math.max(aX, bX) + 64;
+                double minY = Math.min(aY, bY) - 64;
+                double maxY = Math.max(aY, bY) + 64;
+
+                // X- und Y-Achse prüfen
+                if (targetX > minX && targetX < maxX && targetY > minY && targetY < maxY) {
+                    isInRange = true;
+                    break;
+                }
             }
         }
 
         // Turm hinzufügen
-        if (!isInRange) {
+        if (sufficientCoins && !isInRange) {
             // Position auf dem imaginären Grid berechnen
             // Division ohne Rest
             // todo: View Konstanten -> GameConfig
@@ -67,7 +82,8 @@ public class TowerManager {
             // Turm hinzufügen
             if (!towerExists) {
                 Point2D.Double newLocation = new Point2D.Double(newLocationX, newLocationY);
-                model.getTowers().add(new BasicTower(newLocation));
+                model.getTowers().add(new BasicTower(newLocation, model.getGameConfig().getBasicTowerCost()));
+                playerManager.removeCoins(model.getGameConfig().getBasicTowerCost());
             }
         }
     }

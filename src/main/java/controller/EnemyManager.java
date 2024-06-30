@@ -8,13 +8,15 @@ import java.util.List;
 
 public class EnemyManager {
     private GameModel model;
+    private PlayerManager playerManager;
     private final int delayBetweenEnemies;
     private long lastEnemySpawnTime;
 
-    public EnemyManager(GameModel model) {
+    public EnemyManager(GameModel model, PlayerManager playerManager) {
         this.model = model;
         this.delayBetweenEnemies = model.getGameConfig().getDelayBetweenEnemies();
         this.lastEnemySpawnTime = System.currentTimeMillis();
+        this.playerManager = playerManager;
     }
 
     public void spawnEnemies() {
@@ -33,13 +35,18 @@ public class EnemyManager {
        model.getEnemies().add(enemy);
     }
 
-
     public void updateEnemies() {
         List<AbstractEnemy> enemiesToRemove = new ArrayList<>();
 
         for (AbstractEnemy enemy : model.getEnemies()) {
             enemy.update();
-            if (enemy.hasReachedEnd() || enemy.isDead()) {
+
+            if (enemy.hasReachedEnd()) {
+                playerManager.removeHealth(enemy.getDamage());
+                enemiesToRemove.add(enemy);
+            }
+
+            if (enemy.isDead()) {
                 enemiesToRemove.add(enemy);
             }
         }

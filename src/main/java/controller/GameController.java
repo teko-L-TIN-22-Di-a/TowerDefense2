@@ -12,12 +12,14 @@ public class GameController {
     private EnemyManager enemyManager;
     private TowerManager towerManager;
     private WaveManager waveManager;
+    private PlayerManager playerManager;
 
     public GameController(GameModel model) {
         this.model = model;
         this.waypointManager = new WaypointManager(model);
-        this.enemyManager = new EnemyManager(model);
-        this.towerManager = new TowerManager(model);
+        this.playerManager = new PlayerManager(model);
+        this.enemyManager = new EnemyManager(model, playerManager);
+        this.towerManager = new TowerManager(model, playerManager);
         this.waveManager = new WaveManager(model);
     }
 

@@ -1,6 +1,7 @@
 package model.enemies;
 
 import java.awt.geom.Point2D;
+import java.util.Date;
 import java.util.List;
 
 public abstract class AbstractEnemy {
@@ -10,6 +11,7 @@ public abstract class AbstractEnemy {
     protected double speed;
     protected int health;
     protected int reward;
+    protected int damage;
     protected int currentWaypointIndex;
     protected boolean hasReachedEnd;
     private boolean isDead;
@@ -76,6 +78,10 @@ public abstract class AbstractEnemy {
 
     public int getReward() {
         return reward;
+    }
+
+    public int getDamage() {
+        return damage;
     }
 }
 

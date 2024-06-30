@@ -9,5 +9,6 @@ public class FastEnemy extends AbstractEnemy{
         this.health = 7;
         this.speed = 4;
         this.reward = 4;
+        this.damage = 1;
     }
 }
