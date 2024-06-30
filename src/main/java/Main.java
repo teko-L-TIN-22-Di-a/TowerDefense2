@@ -48,6 +48,9 @@ public class Main {
 
                 // Draw
                 view.repaint();
+
+                // Linux: https://stackoverflow.com/questions/57948299/why-does-my-custom-swing-component-repaint-faster-when-i-move-the-mouse-java
+                view.revalidate();
                 frames++;
             }
 
