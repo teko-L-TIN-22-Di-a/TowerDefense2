@@ -52,10 +52,22 @@ public class Main {
             }
 
             // FPS ausgeben
+            /*
             if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
-                //System.out.println("FPS: " + frames);
+                System.out.println("FPS: " + frames);
                 frames = 0;
                 lastTimeCheck = System.currentTimeMillis();
+            }
+            */
+
+            if (controller.playerWon()) {
+                System.out.println("Congratulations! You won!");
+                break;
+            }
+
+            if (controller.playerLost()) {
+                System.out.println("Congratulations! You lost!");
+                break;
             }
         }
     }

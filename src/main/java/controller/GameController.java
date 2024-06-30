@@ -24,18 +24,12 @@ public class GameController {
     }
 
     public void handleMouseClick(MouseEvent e) {
-        // DEV
         Point2D.Double clickLocation = new Point2D.Double(e.getX(), e.getY());
         towerManager.addTower(clickLocation);
     }
 
     public void addWaypoints() {
         waypointManager.addWaypoints();
-    }
-
-    // DEV
-    public void addTower(Point2D.Double location) {
-        towerManager.addTower(location);
     }
 
     public void updateWaves() {
@@ -51,5 +45,13 @@ public class GameController {
         towerManager.updateTowers();
     }
 
+    public boolean playerWon() {
+        // Spiel gewonnen, wenn alle Gegner getötet wurde und die Wave Queue leer ist
+        return (model.getEnemies().isEmpty() && model.getWavesQueue().isEmpty());
+    }
 
+    public boolean playerLost() {
+        // Spiel verloren, wenn keine der Spieler keine Lebenspunkte mehr hat
+        return model.getPlayer().getHealth() <= 0;
+    }
 }
