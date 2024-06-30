@@ -11,17 +11,43 @@ import java.util.List;
 public class TowerManager {
     private GameModel model;
     private PlayerManager playerManager;
+    private EnemyManager enemyManager;
 
-    public TowerManager(GameModel model, PlayerManager playerManager) {
+    public TowerManager(GameModel model, PlayerManager playerManager, EnemyManager enemyManager) {
         this.model = model;
         this.playerManager = playerManager;
+        this.enemyManager = enemyManager;
     }
 
     public void updateTowers() {
+        long currentTimeStamp = System.currentTimeMillis();
+
         for (AbstractTower tower : model.getTowers()) {
-            for (AbstractEnemy enemy : model.getEnemies()) {
-                if (tower.isEnemyInRange(enemy)) {
-                    System.out.println("enemy in range!");
+            boolean towerOnCooldown = false;
+
+            // Tower on cooldown?
+            if (currentTimeStamp - tower.getLastAttackTimeStamp() > tower.getCooldown()) {
+                System.out.println("not on cooldown");
+            } else {
+                towerOnCooldown = true;
+                System.out.println("on cooldown");
+            }
+
+            // Nur dann angreifen, wenn nicht auf cooldown
+            if (!towerOnCooldown) {
+                for (AbstractEnemy enemy : model.getEnemies()) {
+
+                    // Gegner in Reichweite?
+                    if (tower.isEnemyInRange(enemy)) {
+                        System.out.println("attacking Enemy!");
+                        enemyManager.damageEnemy(enemy, tower.getDamage());
+                        towerOnCooldown = true;
+                        tower.setLastAttackTimeStamp(currentTimeStamp);
+                    }
+                    // Schleife verlassen, wenn der Angriff stattgefunden hat
+                    if (towerOnCooldown) {
+                        break;
+                    }
                 }
             }
         }
@@ -94,9 +120,9 @@ public class TowerManager {
                 // Turm erstellen
                 model.getTowers().add(new BasicTower(
                         newLocation,
-                        model.getGameConfig().getBasicTowerCost(),
                         model.getGameConfig().getBasicTowerCooldown(),
-                        model.getGameConfig().getBasicTowerRange()));
+                        model.getGameConfig().getBasicTowerRange(),
+                        model.getGameConfig().getBasicTowerDamage()));
                 // Anzahl Münzen aktualisieren
                 playerManager.removeCoins(model.getGameConfig().getBasicTowerCost());
             }

@@ -23,6 +23,7 @@ public class GameConfigLoader {
         int basicTowerCost = Integer.parseInt(properties.getProperty("basicTowerCost"));
         int basicTowerCooldown = Integer.parseInt(properties.getProperty("basicTowerCooldown"));
         int basicTowerRange = Integer.parseInt(properties.getProperty("basicTowerRange"));
+        int basicTowerDamage = Integer.parseInt(properties.getProperty("basicTowerDamage"));
 
         return new GameConfig(
                 delayBetweenEnemies,
@@ -31,6 +32,7 @@ public class GameConfigLoader {
                 startingCoins,
                 basicTowerCost,
                 basicTowerCooldown,
-                basicTowerRange);
+                basicTowerRange,
+                basicTowerDamage);
     }
 }

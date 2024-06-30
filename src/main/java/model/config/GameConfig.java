@@ -8,6 +8,7 @@ public class GameConfig {
     final private int basicTowerCost;
     final private int basicTowerCooldown;
     final private int basicTowerRange;
+    final private int basicTowerDamage;
 
     public GameConfig(int delayBetweenEnemies,
                       int delayBetweenWaves,
@@ -15,7 +16,8 @@ public class GameConfig {
                       int startingCoins,
                       int basicTowerCost,
                       int basicTowerCooldown,
-                      int basicTowerRange) {
+                      int basicTowerRange,
+                      int basicTowerDamage) {
         this.delayBetweenEnemies = delayBetweenEnemies;
         this.delayBetweenWaves = delayBetweenWaves;
         this.startingHealth = startingHealth;
@@ -23,6 +25,7 @@ public class GameConfig {
         this.basicTowerCost = basicTowerCost;
         this.basicTowerCooldown = basicTowerCooldown;
         this.basicTowerRange = basicTowerRange;
+        this.basicTowerDamage = basicTowerDamage;
     }
 
     public int getDelayBetweenEnemies() {
@@ -51,5 +54,9 @@ public class GameConfig {
 
     public int getBasicTowerRange() {
         return  basicTowerRange;
+    }
+
+    public int getBasicTowerDamage() {
+        return basicTowerDamage;
     }
 }

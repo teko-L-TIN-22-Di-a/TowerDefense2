@@ -153,13 +153,12 @@ public class GameView extends JPanel implements MouseListener {
         for (AbstractTower tower : towers) {
             g.drawImage(towerImage, tower.getX(), tower.getY(), null);
 
-
             // DEV - Draw Range and Tower Center
             int r = (int)tower.getRange();
 
             g.setColor(Color.pink);
             g.drawOval(tower.getX()+32, tower.getY()+32, 3, 3);
-            g.drawOval(tower.getX()+32 - r, tower.getY()+32 -r, r*2, r*2);
+            g.drawRect(tower.getX()+32 - r, tower.getY()+32 -r, r*2, r*2);
         }
     }
 

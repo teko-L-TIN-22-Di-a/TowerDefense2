@@ -26,7 +26,11 @@ public abstract class AbstractEnemy {
     }
 
     public void update() {
+        // Lebenspunkte berechnen
         move();
+        if (health <= 0) {
+            isDead = true;
+        }
     }
 
     private void move() {

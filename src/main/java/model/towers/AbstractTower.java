@@ -6,16 +6,17 @@ import java.awt.geom.Point2D;
 
 public abstract class AbstractTower {
     protected Point2D.Double position;
+    protected long lastAttackTimeStamp;
     protected int range;
-    protected int cost;
     protected int cooldown;
-    protected boolean isOnCooldown;
+    protected int damage;
 
-    public AbstractTower(Point2D.Double position, int cost, int cooldown, int range) {
+    public AbstractTower(Point2D.Double position, int cooldown, int range, int damage) {
         this.position = position;
-        this.cost = cost;
         this.cooldown = cooldown;
         this.range = range;
+        this.damage = damage;
+        this.lastAttackTimeStamp = System.currentTimeMillis();
     }
 
     public int getX() {
@@ -26,16 +27,24 @@ public abstract class AbstractTower {
         return (int)position.y;
     }
 
-    public int getCost() {
-        return cost;
+    public int getDamage() {
+        return damage;
     }
 
     public double getRange() {
         return range;
     }
 
-    public boolean isOnCooldown() {
-        return isOnCooldown;
+    public int getCooldown() {
+        return cooldown;
+    }
+
+    public long getLastAttackTimeStamp() {
+        return lastAttackTimeStamp;
+    }
+
+    public void setLastAttackTimeStamp(long timeStamp) {
+        this.lastAttackTimeStamp = timeStamp;
     }
 
     public boolean isEnemyInRange(AbstractEnemy enemy) {

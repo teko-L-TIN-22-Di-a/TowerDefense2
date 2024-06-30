@@ -19,7 +19,7 @@ public class GameController {
         this.waypointManager = new WaypointManager(model);
         this.playerManager = new PlayerManager(model);
         this.enemyManager = new EnemyManager(model, playerManager);
-        this.towerManager = new TowerManager(model, playerManager);
+        this.towerManager = new TowerManager(model, playerManager, enemyManager);
         this.waveManager = new WaveManager(model);
     }
 
