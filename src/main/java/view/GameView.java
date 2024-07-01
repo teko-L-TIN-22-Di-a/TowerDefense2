@@ -223,7 +223,7 @@ public class GameView extends JPanel implements MouseListener {
                 g.drawImage(enemyImage, enemy.getX()-32, enemy.getY()-32, null);
 
                 // Gegner unterscheiden
-                if (enemy instanceof NormalEnemy) {
+                if (enemy instanceof BasicEnemy) {
                     g.setColor(Color.BLUE);
                 } else if (enemy instanceof FastEnemy) {
                     g.setColor(Color.YELLOW);

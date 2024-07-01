@@ -67,7 +67,7 @@ public class WaveManager {
         List<AbstractEnemy> enemiesToAdd = new ArrayList<>();
 
         // Gegner hinzufügen
-        IntStream.range(0, wave.getNormalEnemyCount()).forEach(i -> enemiesToAdd.add(new NormalEnemy(model.getWaypoints())));
+        IntStream.range(0, wave.getNormalEnemyCount()).forEach(i -> enemiesToAdd.add(new BasicEnemy(model.getWaypoints())));
         IntStream.range(0, wave.getFastEnemyCount()).forEach(i -> enemiesToAdd.add(new FastEnemy(model.getWaypoints())));
         IntStream.range(0, wave.getEliteEnemyCount()).forEach(i -> enemiesToAdd.add(new EliteEnemy(model.getWaypoints())));
 

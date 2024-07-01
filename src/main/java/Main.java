@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 /**
- * Die Main Klasse, beinhaltet die Game Loop
+ * Die Main Klasse beinhaltet Game Loop
  */
 public class Main {
 
