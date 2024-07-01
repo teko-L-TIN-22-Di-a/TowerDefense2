@@ -5,6 +5,9 @@ import view.GameView;
 import javax.swing.*;
 import java.io.IOException;
 
+/**
+ * Die Main Klasse, beinhaltet die Game Loop
+ */
 public class Main {
 
     public static void main(String[] args) throws IOException {

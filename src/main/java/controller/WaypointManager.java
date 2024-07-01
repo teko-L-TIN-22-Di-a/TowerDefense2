@@ -4,9 +4,19 @@ import model.GameModel;
 
 import java.awt.geom.Point2D;
 
+/**
+ * Die Klasse WaypointManager ist für jegliche Interaktionen mit den Waypoints zuständig
+ */
 public class WaypointManager {
+    /**
+     * Instanz der Klasse GameModel
+     */
     GameModel model;
 
+    /**
+     * Konstruktor
+     * @param model Instanz der Klasse GameModel
+     */
     public WaypointManager(GameModel model) {
         this.model = model;
     }
@@ -14,7 +24,7 @@ public class WaypointManager {
     public void addWaypoints() {
         // Waypoints
         // unschön und hardcoded, funktioniert aber, wird später via json eingelesen
-        // todo: waypoints.json
+        // ToDo: -> waypoints.json
         addWaypoint(new Point2D.Double(832,-64));
         addWaypoint(new Point2D.Double(832, 256));
         addWaypoint(new Point2D.Double(640, 256));

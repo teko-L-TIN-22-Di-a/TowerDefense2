@@ -6,19 +6,41 @@ import model.towers.AbstractTower;
 import model.towers.BasicTower;
 
 import java.awt.geom.Point2D;
-import java.util.List;
 
+/**
+ * Die Klasse TowerManager ist für jegliche Interaktionen mit den Instanzen der Tower Klassen zuständig
+ */
 public class TowerManager {
+    /**
+     * Instanz der Klasse GameModel, beinhaltet den Spielzustand
+     */
     private GameModel model;
+    /**
+     * Instanz der Klasse PlayerManager, über welche die Spielerdaten angesteuert werden
+     */
     private PlayerManager playerManager;
+    /**
+     * Instanz der Klasse EnemyManger, steuert alle Instanzen der Enemy Klassen an
+     */
     private EnemyManager enemyManager;
 
+    /**
+     * Konstruktor
+     * @param model Instanz der Klasse GameModel
+     * @param playerManager Instanz der Klasse PlayerManager
+     * @param enemyManager Instanz der Klasse EnemyManager
+     */
     public TowerManager(GameModel model, PlayerManager playerManager, EnemyManager enemyManager) {
         this.model = model;
         this.playerManager = playerManager;
         this.enemyManager = enemyManager;
     }
 
+    /**
+     * Aktualisiert alle Türme, welche sich auf dem Spielfeld befinden.
+     * Prüft ob ein Turm auf Cooldown ist und ob es Gegner in der Reichweite gibt.
+     * Lässt den Turm die Gegner angreifen
+     */
     public void updateTowers() {
         long currentTimeStamp = System.currentTimeMillis();
 
@@ -27,10 +49,10 @@ public class TowerManager {
 
             // Tower on cooldown?
             if (currentTimeStamp - tower.getLastAttackTimeStamp() > tower.getCooldown()) {
-                System.out.println("not on cooldown");
+                //System.out.println("not on cooldown");
             } else {
                 towerOnCooldown = true;
-                System.out.println("on cooldown");
+                //System.out.println("on cooldown");
             }
 
             // Nur dann angreifen, wenn nicht auf cooldown
@@ -53,6 +75,13 @@ public class TowerManager {
         }
     }
 
+    /**
+     * Fügt einen Turm auf das Spielfeld hinzu
+     * Prüft ob die Koordinaten, in der Nähe der Waypoints sind.
+     * Prüft ob der Spieler genug Guthaben hat, um den Turm zu bauen.
+     * Prüft ob ein Turm an diesem Ort bereits vorhanden ist.
+     * @param location Point2D.Double location
+     */
     public void addTower(Point2D.Double location) {
 
         double targetX = location.getX();

@@ -4,7 +4,7 @@ import controller.GameController;
 import model.GameModel;
 import model.enemies.*;
 import model.towers.AbstractTower;
-import util.ResourceLoader;
+import util.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,51 +14,121 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+/**
+ * Die Klasse GameView repräsentiert das View im MVC Pattern.
+ * Diese Klasse beinhaltet alle Informationen, die es braucht um das UI sowie den Spielzustand zu rendern.
+ * Über den MouseListener wird der Controller angesteurt, um den Spielzustand zu ändern.
+ */
 public class GameView extends JPanel implements MouseListener {
 
-    // GameScreen 15 * 48
-    private static final int ROWS = 15;
-    private static final int COLUMNS = 15;
-    private static final int TILE_SIZE = 64;
-    private static final int PANEL_WIDTH = ROWS * TILE_SIZE;
-    private static final int PANEL_HEIGHT = COLUMNS * TILE_SIZE;
+    /**
+     * Anzahl Zeilen, wird mit dem GameConfigLoader eingelesen
+     */
+    private final int ROWS;
+    /**
+     * Anzahl Spalten, wird mit dem GameConfigLoader eingelesen
+     */
+    private final int COLUMNS;
+    /**
+     * Kachelgrösse, wird mit dem GameConfigLoader eingelesen
+     */
+    private final int TILE_SIZE;
+    /**
+     * Breite des JPanels
+     */
+    private final int PANEL_WIDTH;
+    /**
+     * Höhe des JPanels
+     */
+    private final int PANEL_HEIGHT;
 
+    /**
+     * Instanz der Klasse GameModel, beinhaltet den Spielzustand, welcher durch die Klasse GameView gerendert wird
+     */
     private GameModel model;
+    /**
+     * Instanz der Klasse GameController, wird genutzt, um den Spielzustand model zu ändern
+     */
     private GameController controller;
-    private Dimension dimension = new Dimension(PANEL_WIDTH, PANEL_HEIGHT);
-
+    /**
+     * Dimension, gibt die Grösse des Applikationsfensters an
+     */
+    private Dimension dimension;
+    /**
+     * Hintergrund auf dem Spielfeld
+     */
     private BufferedImage backgroundImage;
+    /**
+        Symbol, um die Spielerlebenspunkte darzustellen
+     */
     private BufferedImage heartImage;
+    /**
+     * Symbol, um die Münzen des Spielers darzustellen
+     */
     private BufferedImage coinImage;
+    /**
+     * Bild des Gegners Up
+     */
     private BufferedImage enemyImageUp;
+    /**
+     * Bild des Gegners Down
+     */
     private BufferedImage enemyImageDown;
+    /**
+     * Bild des Gegners Left
+     */
     private BufferedImage enemyImageLeft;
+    /**
+     * Bild des Gegners Right
+     */
     private BufferedImage enemyImageRight;
+    /**
+     * Bild des Turmes
+     */
     private BufferedImage towerImage;
 
+    /**
+     * Konstruktor
+     * Lädt Bilder, initialisiert das Spielfeld und fügt den MouseListener hinzu
+     * @param model Instanz der Klasse GameModel
+     * @param controller Instanz der Klasse GameController
+     */
     public GameView(GameModel model, GameController controller) {
-
-        // https://www.iconarchive.com/show/beautiful-flat-icons-by-elegantthemes.1.html
-        //https://www.kenney.nl/assets/tower-defense-top-down
-        backgroundImage = ResourceLoader.loadImage("/levels/level1.png");
-        heartImage = ResourceLoader.loadImage("/player/heart.png");
-        coinImage = ResourceLoader.loadImage("/player/coin.png");
-        towerImage = ResourceLoader.loadImage("/towers/tower2.png");
-
-        // Enemy
-        enemyImageUp = ResourceLoader.loadImage("/enemies/enemy1_up.png");
-        enemyImageDown = ResourceLoader.loadImage("/enemies/enemy1_down.png");
-        enemyImageLeft = ResourceLoader.loadImage("/enemies/enemy1_left.png");
-        enemyImageRight = ResourceLoader.loadImage("/enemies/enemy1_right.png");
 
         this.model = model;
         this.controller = controller;
+
+        ROWS = model.getGameConfig().getRows();
+        COLUMNS = model.getGameConfig().getColumns();
+        TILE_SIZE = model.getGameConfig().getTileSize();
+        PANEL_WIDTH = ROWS * TILE_SIZE;
+        PANEL_HEIGHT = COLUMNS * TILE_SIZE;
+
+        this.dimension = new Dimension(PANEL_WIDTH, PANEL_HEIGHT);
+
+        // https://www.iconarchive.com/show/beautiful-flat-icons-by-elegantthemes.1.html
+        //https://www.kenney.nl/assets/tower-defense-top-down
+        // UI
+        backgroundImage = ImageLoader.loadImage("/levels/level1.png");
+        heartImage = ImageLoader.loadImage("/player/heart.png");
+        coinImage = ImageLoader.loadImage("/player/coin.png");
+        towerImage = ImageLoader.loadImage("/towers/tower2.png");
+
+        // Enemy
+        enemyImageUp = ImageLoader.loadImage("/enemies/enemy1_up.png");
+        enemyImageDown = ImageLoader.loadImage("/enemies/enemy1_down.png");
+        enemyImageLeft = ImageLoader.loadImage("/enemies/enemy1_left.png");
+        enemyImageRight = ImageLoader.loadImage("/enemies/enemy1_right.png");
+
         this.addMouseListener(this);
         this.setPreferredSize(dimension);
         this.setMinimumSize(dimension);
         this.setMaximumSize(dimension);
     }
 
+    /**
+     * Rendert im Model vorhandene Spieldaten
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -69,10 +139,18 @@ public class GameView extends JPanel implements MouseListener {
         drawPlayerUI(g);
     }
 
+    /**
+     * Zeichnet das Hintergrundsbild
+     * @param g Graphics
+     */
     private void drawBackground(Graphics g) {
         g.drawImage(backgroundImage, 0, 0, null);
     }
 
+    /**
+     * Zeichnet die Spielerbezogene Bilder und Elemente (Lebenspünkte, Münzen, Werte)
+     * @param g Graphics
+     */
     private void drawPlayerUI(Graphics g) {
         String health = Integer.toString(model.getPlayer().getHealth());
         String coins = Integer.toString(model.getPlayer().getCoins());
@@ -86,6 +164,11 @@ public class GameView extends JPanel implements MouseListener {
         g.drawString(coins, 42, 63);
     }
 
+    /**
+     * Zeichnet die Waypoints auf dem Spielfeld und verbindet sie sequenziell
+     * @param g Graphics
+     * @param waypoints List Point2D.Double waypoints
+     */
     private void drawWaypoints(Graphics g, List<Point2D.Double> waypoints) {
         double prevX = waypoints.get(0).getX();
         double prevY = waypoints.get(0).getY();
@@ -102,6 +185,11 @@ public class GameView extends JPanel implements MouseListener {
         }
     }
 
+    /**
+     * Zeichnet Gegner auf dem Spielfeld
+     * @param g Graphics
+     * @param enemies List AbstractEnemy enemies
+     */
     private void drawEnemies(Graphics g, List<AbstractEnemy> enemies) {
         for (AbstractEnemy enemy : enemies) {
 
@@ -149,6 +237,11 @@ public class GameView extends JPanel implements MouseListener {
         }
     }
 
+    /**
+     * Zeichent Türme auf dem Spielfeld
+     * @param g Graphics
+     * @param towers List AbstractTower towers
+     */
     public void drawTowers(Graphics g, List<AbstractTower> towers) {
         for (AbstractTower tower : towers) {
             g.drawImage(towerImage, tower.getX(), tower.getY(), null);
@@ -162,16 +255,10 @@ public class GameView extends JPanel implements MouseListener {
         }
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        // nichts machen
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        // nichts machen
-    }
-
+    /**
+     * Übergibt den MouseEvent e an den GameController weiter, um einen Turm zu platzieren
+     * @param e MouseEvent
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
         controller.handleMouseClick(e);
@@ -185,6 +272,16 @@ public class GameView extends JPanel implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+        // nichts machen
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        // nichts machen
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
         // nichts machen
     }
 }
