@@ -1,26 +1,36 @@
 import controller.GameController;
 import model.GameModel;
+import util.GameLogger;
 import view.GameView;
 
 import javax.swing.*;
 import java.io.IOException;
+
+import java.util.logging.Logger;
 
 /**
  * Die Main Klasse, beinhaltet die Game Loop
  */
 public class Main {
 
+    private static final Logger logger = GameLogger.getLogger();
+
     public static void main(String[] args) throws IOException {
+
+        logger.info("Starting Game...");
 
         final double FPS_PER_SECOND = 60.0;
         final double TIME_PER_FRAME = 1_000_000_000.00 / FPS_PER_SECOND;
 
+        logger.info("Initialising MVC components...");
         GameModel model = new GameModel();
         GameController controller = new GameController(model);
         GameView view = new GameView(model, controller);
 
+        logger.info("Adding waypoints...");
         controller.addWaypoints();
 
+        logger.info("Initialising UI...");
         JFrame jframe = new JFrame();
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jframe.setContentPane(view);
@@ -37,6 +47,7 @@ public class Main {
         int frames = 0;
 
         // todo UPDATE und DRAW trennen (UPS / FPS)
+        logger.info("Entering game loop...");
         while (true) {
             now = System.nanoTime();
 
@@ -68,11 +79,13 @@ public class Main {
 
             if (controller.playerWon()) {
                 System.out.println("Congratulations! You won!");
+                logger.info("Game won, leaving game loop...");
                 break;
             }
 
             if (controller.playerLost()) {
                 System.out.println("Congratulations! You lost!");
+                logger.info("Game lost, leaving game loop...");
                 break;
             }
         }
