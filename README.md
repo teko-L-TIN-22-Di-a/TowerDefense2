@@ -29,14 +29,35 @@ Bei diesem Spiel handelt es sich um ein Spielmodus - Einzelspieler.
 Die Turmtypen werden während der Projektierungsphase erarbeitet. Sie werden sich durch Reichweite, Schaden und Angriffsgeschwindigkeit unterscheiden.
 Mit den Startguthaben, die der Spieler am Anfang des Spiels erhält sowie mit den Belohnungen für die eliminierte Gegner soll der Spieler eine Möglichkeit haben, neue Türme zu bauen sowie die bestehenden Türme mit gewissen Upgrades wie Schaden-, Angriffsgeschwindikgeits- oder Reichweiteupgrades nachzurüsten.
 
+|Turmtyp| Beschreibung                                                   |
+|-|----------------------------------------------------------------|
+|BasicTower| Basisturm, der den Gegner Schaden anfügt                       |
+|TeleportingTower| Ein Turm, der Gegner zu einem zufälligen Waypoint teleportiert |
+|FreezingTower| Ein Turm, der die Gegner einfrieren lässt                      |
+
 ## Kartenlayout
 
-Der Kartenlayout soll folgende Elemente beinhalten:
+Kartenlayout ist statisch implementiert und beinhaltet soganennte Waypoints.
+Die Gegner bewegen sich von einem Waypoint zum Anderen.
 
-- Spawn Tile: Auf diesem Kachel werde die Gegner erscheinen
-- Finish Tile: Erreicht ein oder mehrere Gegner diesen Kachel, werden die Trefferpunkte des Spielers abgezogen
-- Building Tile: Auf diesem Kachel kann ein Turm errichtet und nachgerüstet werden
-- Road Tile: Ein Kachel, auf welchem sich die Gegner bewegen dürfen
-- Environment Tile: Rein dekoratives Kachel (Wasser, Wald, Sand usw.), keine Interaktionen auf diesem Kachel möglich
+## Patterns
 
-Der Kartenlayout wird so einfach wie möglichgehaltet, also erscheinen die Gegner nur an einem Ort und versuchen die Finish-Kachel zu erreichen.
+Beim implementieren des Spieles werden folgende Patterns verwendet
+
+### MVC
+
+#### Model
+
+Enthält die Daten und die Logik deines Spiels. Hier werden die Spielzustände wie Türme, Gegner und Wellen verwaltet.
+
+#### View
+
+Zeigt den aktuellen Zustand des Modells dem Benutzer an. Es ist das, was der Benutzer sieht (z. B. das Spielfeld, die Türme und die Gegner).
+
+#### Controller
+
+Der Controller verarbeitet die Benutzerinteraktionen (wie Mausklicks oder Tastatureingaben) und steuert das Modell entsprechend. Er fungiert als Vermittler zwischen View und Model.
+
+### Singleton
+
+Das "Singleton"-Pattern wird bei der Spielkonfiguration verwendet, um sicherzustellen dass diese einmalig vorhanden ist.
