@@ -2,6 +2,7 @@ package model.enemies;
 
 import java.awt.geom.Point2D;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Diese Klasse dient als Vorlage für verschiedene Arten von Gegner.
@@ -49,9 +50,14 @@ public abstract class AbstractEnemy {
      */
     protected boolean hasReachedEnd;
     /**
+     * Ist der Gegner eingefroren?
+     */
+    protected boolean isFrozen;
+
+    /**
      * Ist der Gegner tot?
      */
-    private boolean isDead;
+    protected boolean isDead;
 
     /**
      * Konstruktor
@@ -66,6 +72,7 @@ public abstract class AbstractEnemy {
                 waypoints.get(currentWaypointIndex).getY());
         this.hasReachedEnd = false;
         this.isDead = false;
+        this.isFrozen = false;
     }
 
     /**
@@ -86,25 +93,28 @@ public abstract class AbstractEnemy {
      * um Richtung * Geschwindigkeit aktualisieren
      */
     private void move() {
-        if (currentWaypointIndex < waypoints.size() - 1) {
-            Point2D.Double startPoint = waypoints.get(currentWaypointIndex);
-            Point2D.Double endPoint = waypoints.get(currentWaypointIndex + 1);
+        // Darf sich der Gegner bewegen?
+        if (!this.isFrozen) {
+            if (currentWaypointIndex < waypoints.size() - 1) {
+                Point2D.Double startPoint = waypoints.get(currentWaypointIndex);
+                Point2D.Double endPoint = waypoints.get(currentWaypointIndex + 1);
 
-            // Pythagoras :D
-            double dx = endPoint.x - startPoint.x;
-            double dy = endPoint.y - startPoint.y;
-            double length = Math.sqrt(dx * dx + dy * dy);
-            direction = new Point2D.Double(dx / length, dy / length);
+                // Pythagoras :D
+                double dx = endPoint.x - startPoint.x;
+                double dy = endPoint.y - startPoint.y;
+                double length = Math.sqrt(dx * dx + dy * dy);
+                direction = new Point2D.Double(dx / length, dy / length);
 
-            if (currentPosition.distance(endPoint) > speed) {
-                currentPosition.x += direction.x * speed;
-                currentPosition.y += direction.y * speed;
+                if (currentPosition.distance(endPoint) > speed) {
+                    currentPosition.x += direction.x * speed;
+                    currentPosition.y += direction.y * speed;
+                } else {
+                    currentPosition.setLocation(endPoint);
+                    currentWaypointIndex++;
+                }
             } else {
-                currentPosition.setLocation(endPoint);
-                currentWaypointIndex++;
+                hasReachedEnd = true;
             }
-        } else {
-            hasReachedEnd = true;
         }
     }
 
@@ -118,6 +128,29 @@ public abstract class AbstractEnemy {
         if (health <= 0) {
             isDead = true;
         }
+    }
+
+    /**
+     * Gegner an einen zufälling Waypoint importieren, auf welchem er schon mal gewesen war
+     */
+    public void teleportEnemy() {
+        Random random = new Random();
+        currentWaypointIndex = random.nextInt(waypoints.size() - this.currentWaypointIndex);
+        currentPosition.setLocation(waypoints.get(currentWaypointIndex));
+    }
+
+    /**
+     * Gegner anhalten
+     */
+    public void freezeEnemy() {
+        this.isFrozen = true;
+    }
+
+    /**
+     * Gegner befreien
+     */
+    public void unfreezeEnemy() {
+        this.isFrozen = false;
     }
 
     /**

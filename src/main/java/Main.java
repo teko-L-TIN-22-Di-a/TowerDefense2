@@ -19,7 +19,7 @@ public class Main {
 
         logger.info("Starting Game...");
 
-        final double FPS_PER_SECOND = 60.0;
+        final double FPS_PER_SECOND = 120.0;
         final double TIME_PER_FRAME = 1_000_000_000.00 / FPS_PER_SECOND;
 
         logger.info("Initialising MVC components...");

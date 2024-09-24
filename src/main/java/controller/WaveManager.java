@@ -42,6 +42,7 @@ public class WaveManager {
 
     /**
      * Eine neue Gegnerwelle in die SpawningQueue aufnehmen, wenn keine Gegner in der Queue vorhanden sind
+     * Ist der Endless Modus aktiv, wird die zuletzt gespawnte Welle genommen und die Anzahl gegner inkrementiert
      */
     public void updateWaves() {
         if (!model.getWavesQueue().isEmpty()) {
@@ -54,6 +55,16 @@ public class WaveManager {
                     queueWave(currentWave);
                     currentWave = model.getWavesQueue().poll();
                     lastWaveSpawnTime = currentTime;
+                }
+            }
+        } else {
+            // Endless Modus
+            if (model.getGameConfig().getEndlessEnemiesMode()) {
+                System.out.println("DEBUG: starting endless mode");
+                if(model.getWavesQueue().isEmpty()) {
+                    // Anzahl Gegner inkrementieren
+                    currentWave.incrementEnemyCount();
+                    model.getWavesQueue().add(currentWave);
                 }
             }
         }

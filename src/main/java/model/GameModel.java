@@ -4,6 +4,9 @@ import model.config.GameConfig;
 import model.enemies.AbstractEnemy;
 import model.player.Player;
 import model.towers.AbstractTower;
+import model.towers.BasicTower;
+import model.towers.FreezingTower;
+import model.towers.TeleportingTower;
 import model.waves.Wave;
 import util.GameConfigLoader;
 import util.WaveLoader;
@@ -49,6 +52,15 @@ public class GameModel {
      * Eine Instanz der Klasse Spieler.
      */
     private Player player;
+    /**
+     * Building Index, entspricht dem Turm, der gebaut wird, wenn auf dem Spielfeld geklickt wird
+     */
+    private int selectedTowerIndex;
+    /**
+     * Mögliche Turmtypen, die gebaut werden können
+     */
+    private final Class<?>[] towerTypes = {BasicTower.class, FreezingTower.class, TeleportingTower.class};
+
 
     /**
      * Konstruktor
@@ -62,6 +74,7 @@ public class GameModel {
         this.gameConfig = GameConfigLoader.loadConfig("/gameConfig.properties");
         this.wavesQueue = WaveLoader.loadWaves("waves/waves.json");
         this.player = new Player(this.gameConfig.getStartingHealth(), this.gameConfig.getStartingCoins());
+        this.selectedTowerIndex = 0;
     }
 
     /**
@@ -118,5 +131,28 @@ public class GameModel {
      */
     public Player getPlayer() {
         return player;
+    }
+
+    /**
+     * Getter, gibt den Index des zu bauenden Turmtypen zurück
+     * @return int selectedTowerIndex
+     */
+    public int getSelectedTowerIndex() {
+        return selectedTowerIndex;
+    }
+
+    /**
+     * Setter, setzt den Index des zu bauenden Turmtypen auf den neuen Wert
+     */
+    public void setSelectedTowerIndex(int selectedTowerIndex) {
+        this.selectedTowerIndex = selectedTowerIndex;
+    }
+
+    /**
+     * Getter, gibt alle möglichen Turmtypen zurück, die gebaut werden können
+     * @return Class<?>[] towerTypes
+     */
+    public Class<?>[] getTowerTypes() {
+        return towerTypes;
     }
 }

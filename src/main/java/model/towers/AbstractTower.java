@@ -68,9 +68,7 @@ public abstract class AbstractTower {
         int enemyY = enemy.getY();
 
         if (enemyX > minX && enemyX < maxX) {
-            if (enemyY > minY && enemyY < maxY) {
-                return true;
-            }
+            return enemyY > minY && enemyY < maxY;
         }
 
         return false;

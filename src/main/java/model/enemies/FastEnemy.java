@@ -17,7 +17,6 @@ public class FastEnemy extends AbstractEnemy{
     public FastEnemy(List<Point2D.Double> waypoints) {
         super(waypoints);
 
-        // ToDo: Keine Magic Numbers -> via gameConfig.properties einlesen
         this.health = 7;
         this.speed = 4;
         this.reward = 4;

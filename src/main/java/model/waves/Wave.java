@@ -59,5 +59,12 @@ public class Wave {
         return eliteEnemyCount;
     }
 
-
+    /**
+     * Anzahl Gegner in einer Welle inkrementieren (Endless Modus)
+     */
+    public void incrementEnemyCount() {
+        this.normalEnemyCount++;
+        this.fastEnemyCount++;
+        this.eliteEnemyCount++;
+    }
 }

@@ -4,6 +4,9 @@ import controller.GameController;
 import model.GameModel;
 import model.enemies.*;
 import model.towers.AbstractTower;
+import model.towers.BasicTower;
+import model.towers.FreezingTower;
+import model.towers.TeleportingTower;
 import util.ImageLoader;
 
 import javax.swing.*;
@@ -86,6 +89,19 @@ public class GameView extends JPanel implements MouseListener {
      * Bild des Turmes
      */
     private BufferedImage towerImage;
+    /**
+     * Bild des Basic Towers
+     */
+    private BufferedImage basicTowerImage;
+    /**
+     * Bild des Teleporting Towers
+     *
+     */
+    private BufferedImage teleportingTowerImage;
+    /**
+     * Bild des Freezing Towers
+     */
+    private BufferedImage freezingTowerImage;
 
     /**
      * Konstruktor
@@ -112,9 +128,13 @@ public class GameView extends JPanel implements MouseListener {
         backgroundImage = ImageLoader.loadImage("/levels/level1.png");
         heartImage = ImageLoader.loadImage("/player/heart.png");
         coinImage = ImageLoader.loadImage("/player/coin.png");
-        towerImage = ImageLoader.loadImage("/towers/tower2.png");
 
-        // Enemy
+        // Türme
+        basicTowerImage = ImageLoader.loadImage("/towers/basicTower.png");
+        teleportingTowerImage = ImageLoader.loadImage("/towers/teleportingTower.png");
+        freezingTowerImage = ImageLoader.loadImage("/towers/freezingTower.png");
+
+        // Gegner
         enemyImageUp = ImageLoader.loadImage("/enemies/enemy1_up.png");
         enemyImageDown = ImageLoader.loadImage("/enemies/enemy1_down.png");
         enemyImageLeft = ImageLoader.loadImage("/enemies/enemy1_left.png");
@@ -154,6 +174,7 @@ public class GameView extends JPanel implements MouseListener {
     private void drawPlayerUI(Graphics g) {
         String health = Integer.toString(model.getPlayer().getHealth());
         String coins = Integer.toString(model.getPlayer().getCoins());
+        String selectedTowerName = model.getTowerTypes()[model.getSelectedTowerIndex()].getSimpleName();
 
         g.drawImage(heartImage, 5,5,null);
         g.drawImage(coinImage, 5, 40, null);
@@ -162,6 +183,7 @@ public class GameView extends JPanel implements MouseListener {
         g.setFont(new Font("Consolas", Font.PLAIN, 19));
         g.drawString(health, 42, 28);
         g.drawString(coins, 42, 63);
+        g.drawString("Building: " + selectedTowerName, 30, 930);
     }
 
     /**
@@ -238,20 +260,31 @@ public class GameView extends JPanel implements MouseListener {
     }
 
     /**
-     * Zeichent Türme auf dem Spielfeld
+     * Zeichnet Türme auf dem Spielfeld
      * @param g Graphics
      * @param towers List AbstractTower towers
      */
     public void drawTowers(Graphics g, List<AbstractTower> towers) {
         for (AbstractTower tower : towers) {
-            g.drawImage(towerImage, tower.getX(), tower.getY(), null);
+
+            // Abhängig von der Turm Klasse das entsprechende Image verwenden
+            if (tower instanceof BasicTower) {
+                g.setColor(Color.RED);
+                g.drawImage(basicTowerImage, tower.getX(), tower.getY(), null);
+            } else if (tower instanceof TeleportingTower) {
+                g.setColor(Color.MAGENTA);
+                g.drawImage(teleportingTowerImage, tower.getX(), tower.getY(), null);
+            } else if (tower instanceof FreezingTower) {
+                g.setColor(Color.BLUE);
+                g.drawImage(freezingTowerImage, tower.getX(), tower.getY(), null);
+            }
 
             // DEV - Draw Range and Tower Center
             int r = (int)tower.getRange();
 
-            g.setColor(Color.RED);
-            g.drawOval(tower.getX()+32, tower.getY()+32, 3, 3);
-            g.drawRect(tower.getX()+32 - r, tower.getY()+32 -r, r*2, r*2);
+            //g.setColor(Color.RED);
+            //g.drawOval(tower.getX()+32, tower.getY()+32, 3, 3);
+            //g.drawRect(tower.getX()+32 - r, tower.getY()+32 -r, r*2, r*2);
         }
     }
 

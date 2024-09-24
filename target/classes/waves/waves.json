@@ -1,32 +1,12 @@
 [
   {
     "normalEnemyCount": 1,
-    "fastEnemyCount": 0,
-    "eliteEnemyCount": 0
+    "fastEnemyCount": 1,
+    "eliteEnemyCount": 1
   },
   {
-    "normalEnemyCount": 3,
-    "fastEnemyCount": 0,
-    "eliteEnemyCount": 0
-  },
-  {
-    "normalEnemyCount": 5,
-    "fastEnemyCount": 0,
-    "eliteEnemyCount": 0
-  },
-  {
-    "normalEnemyCount": 0,
-    "fastEnemyCount": 10,
-    "eliteEnemyCount": 0
-  },
-  {
-    "normalEnemyCount": 0,
-    "fastEnemyCount": 0,
-    "eliteEnemyCount": 5
-  },
-  {
-    "normalEnemyCount": 10,
-    "fastEnemyCount": 10,
-    "eliteEnemyCount": 10
+    "normalEnemyCount": 2,
+    "fastEnemyCount": 2,
+    "eliteEnemyCount": 2
   }
 ]

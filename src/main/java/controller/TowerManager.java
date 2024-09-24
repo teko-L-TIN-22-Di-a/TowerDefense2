@@ -4,6 +4,8 @@ import model.GameModel;
 import model.enemies.AbstractEnemy;
 import model.towers.AbstractTower;
 import model.towers.BasicTower;
+import model.towers.FreezingTower;
+import model.towers.TeleportingTower;
 
 import java.awt.geom.Point2D;
 
@@ -61,10 +63,18 @@ public class TowerManager {
 
                     // Gegner in Reichweite?
                     if (tower.isEnemyInRange(enemy)) {
-                        System.out.println("attacking Enemy!");
-                        enemyManager.damageEnemy(enemy, tower.getDamage());
+
+                        if (tower instanceof BasicTower) {
+                            enemyManager.damageEnemy(enemy, tower.getDamage());
+                        } else if (tower instanceof TeleportingTower) {
+                            enemyManager.teleportEnemy(enemy);
+                        } else if (tower instanceof FreezingTower) {
+                            enemyManager.freezeEnemy(enemy);
+                        }
+
                         towerOnCooldown = true;
                         tower.setLastAttackTimeStamp(currentTimeStamp);
+
                     }
                     // Schleife verlassen, wenn der Angriff stattgefunden hat
                     if (towerOnCooldown) {
@@ -146,15 +156,38 @@ public class TowerManager {
             if (!towerExists) {
                 Point2D.Double newLocation = new Point2D.Double(newLocationX, newLocationY);
                 System.out.println("creating a tower at;" + newLocation);
-                // Turm erstellen
-                model.getTowers().add(new BasicTower(
-                        newLocation,
-                        model.getGameConfig().getBasicTowerCooldown(),
-                        model.getGameConfig().getBasicTowerRange(),
-                        model.getGameConfig().getBasicTowerDamage()));
+                // Turm hinzufügen
+
+                if (model.getTowerTypes()[model.getSelectedTowerIndex()] == BasicTower.class) {
+                    model.getTowers().add(new BasicTower(
+                            newLocation,
+                            model.getGameConfig().getBasicTowerCooldown(),
+                            model.getGameConfig().getBasicTowerRange(),
+                            model.getGameConfig().getBasicTowerDamage()));
+                } else if (model.getTowerTypes()[model.getSelectedTowerIndex()] == TeleportingTower.class) {
+                    model.getTowers().add(new TeleportingTower(
+                            newLocation,
+                            model.getGameConfig().getTeleportingTowerCooldown(),
+                            model.getGameConfig().getTeleportingTowerRange(),
+                            model.getGameConfig().getTeleportingTowerDamage()));
+                } else if (model.getTowerTypes()[model.getSelectedTowerIndex()] == FreezingTower.class) {
+                    model.getTowers().add(new FreezingTower(
+                            newLocation,
+                            model.getGameConfig().getFreezingTowerCooldown(),
+                            model.getGameConfig().getFreezingTowerRange(),
+                            model.getGameConfig().getFreezingTowerDamage()));
+                }
+
                 // Anzahl Münzen aktualisieren
                 playerManager.removeCoins(model.getGameConfig().getBasicTowerCost());
             }
         }
+    }
+
+    /**
+     * Wechselt zwischen den Turm Typen, die gebaut werden können
+     */
+    public void cycleTowerType() {
+        model.setSelectedTowerIndex((model.getSelectedTowerIndex() + 1) % model.getTowerTypes().length);
     }
 }

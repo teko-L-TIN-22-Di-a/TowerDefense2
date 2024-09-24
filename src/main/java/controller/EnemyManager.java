@@ -97,4 +97,20 @@ public class EnemyManager {
 
         model.getEnemies().removeAll(enemiesToRemove);
     }
+
+    /**
+     * Gegner teleportieren
+     * @param enemy
+     */
+    public void teleportEnemy(AbstractEnemy enemy) {
+        enemy.teleportEnemy();
+    }
+
+    /**
+     * Gegner einfrieren
+     * @param enemy
+     */
+    public void freezeEnemy(AbstractEnemy enemy) {
+        enemy.freezeEnemy();
+    }
 }

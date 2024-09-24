@@ -17,7 +17,6 @@ public class EliteEnemy extends AbstractEnemy {
     public EliteEnemy(List<Point2D.Double> waypoints) {
         super(waypoints);
 
-        // ToDo: Keine Magic Numbers -> via gameConfig.properties einlesen
         this.health = 30;
         this.speed = 1;
         this.reward = 10;

@@ -53,8 +53,18 @@ public class GameController {
      * @param e MouseEvent
      */
     public void handleMouseClick(MouseEvent e) {
-        Point2D.Double clickLocation = new Point2D.Double(e.getX(), e.getY());
-        towerManager.addTower(clickLocation);
+        // Links und Rechtsklick unterscheiden
+
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            Point2D.Double clickLocation = new Point2D.Double(e.getX(), e.getY());
+            towerManager.addTower(clickLocation);
+        }
+
+        else if (e.getButton() == MouseEvent.BUTTON3) {
+            towerManager.cycleTowerType();
+            System.out.println("right click");
+        }
+
     }
 
     /**
